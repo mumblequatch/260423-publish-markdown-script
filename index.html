@@ -154,84 +154,11 @@ img { max-width: 100%; height: auto; }
 
 .back-to-top:hover { color: rgb(26, 195, 255); }
 
-/* ── screenplay layout ───────────────────────────────────────────────
- *
- * Industry-standard US screenplay typesetting. Measurements are inches from
- * the page's left text-area edge, converted to `ch` units. Font is inherited
- * from the page body (no Courier override).
- *
- *   Element          Left offset   Right edge / max width
- *   ACTION           0ch           60ch (full text width, 6.0")
- *   DIALOGUE         10ch (1.0")   max-width 35ch (right at 4.5")
- *   PARENTHETICAL    15ch (1.5")   max-width 20ch (right at 3.5")
- *   CHARACTER        22ch (2.2")   single line, ALL CAPS
- *   TRANSITION       right-flushed at 60ch
- *
- * The article column itself is constrained to a 60ch text-area and centered
- * on wide pages so the whole script sits in a comfortable column. Elements
- * within it are LEFT-OFFSET, never centered. Cues only LOOK near-centered
- * because of the proportions — they're pinned at 22ch from the left text
- * edge.
- *
- * Responsive: instead of collapsing indents on small screens (which would
- * destroy the screenplay look), we scale the entire column down via
- * `font-size: clamp()`. The proportional indents ride along automatically
- * because they're in `ch` units.
- */
+/* ── screenplay layout ──────────────────────────────────────────────── */
 
 body.screenplay {
-    /* 60ch text area for the script column. */
-    width: 100%;
-    max-width: 60ch;
-    box-sizing: border-box;
-    /* Desktop: body-prose-sized text (~18px at html=18). Tablet and phone
-     * are overridden in media queries below. */
-    font-size: 1rem;
+    max-width: 6in;
     line-height: 1.5;
-    /* Prevent long unbreakable strings (URLs, underscored slugs in the title)
-     * from forcing horizontal overflow on narrow viewports. */
-    overflow-wrap: anywhere;
-    word-wrap: break-word;
-}
-
-body.screenplay h1 {
-    max-width: 100%;
-    overflow-wrap: anywhere;
-    word-break: break-word;
-}
-
-/* Tablet (601–1024px, iPad portrait & landscape): cap the body at the
- * narrower of 60ch or (viewport − 4rem) so it always has visible margin
- * on both sides AND stays centered. Bigger font than desktop's clamp
- * provides at this width. Inherits body padding (1.5rem) and `margin: 0 auto`
- * for centering. */
-@media (min-width: 601px) and (max-width: 1024px) {
-    body.screenplay {
-        max-width: min(60ch, calc(100vw - 8rem));
-        font-size: 1.4rem;
-    }
-    body.screenplay .character     { margin-left: 14ch; }
-    body.screenplay .parenthetical { margin-left: 9ch; max-width: 100%; }
-    body.screenplay .dialogue      { margin-left: 4ch; max-width: 100%; }
-    body.screenplay .action        { max-width: 100%; }
-    body.screenplay .transition    { max-width: 100%; }
-}
-
-@media (max-width: 600px) {
-    /* Mobile: prioritize text legibility over print-exact indents.
-     * Indents stay proportional (cue > parenthetical > dialogue > action)
-     * but tighten so a comfortably-sized font column fits the viewport. */
-    body.screenplay {
-        max-width: 100%;
-        padding: 1rem 1.25rem;
-        font-size: 1.35rem;
-    }
-    body.screenplay h1 { font-size: 1.3rem; }
-    body.screenplay .character     { margin-left: 8ch; }
-    body.screenplay .parenthetical { margin-left: 5ch; max-width: 100%; }
-    body.screenplay .dialogue      { margin-left: 3ch; max-width: 100%; }
-    body.screenplay .action        { max-width: 100%; }
-    body.screenplay .transition    { max-width: 100%; }
 }
 
 body.screenplay h1 {
@@ -243,38 +170,29 @@ body.screenplay h1 {
 .scene-heading {
     font-weight: bold;
     text-transform: uppercase;
-    margin-left: 0;
     margin-top: 1.5em;
     margin-bottom: 0.5em;
 }
 
 .character {
-    /* 2.2" indent from left text edge — pinned, NOT centered. */
-    margin-left: 22ch;
-    margin-right: 0;
+    margin-left: 2.2in;
     margin-bottom: 0;
-    text-align: left;
     text-transform: uppercase;
 }
 
 .parenthetical {
-    /* 1.5" indent, 2.0" wide. */
-    margin-left: 15ch;
-    margin-right: 0;
-    max-width: 20ch;
-    text-align: left;
-    font-style: normal;
+    margin-left: 1.5in;
+    margin-right: 1.75in;
+    margin-top: 0;
     margin-bottom: 0;
+    font-style: normal;
 }
 
 .dialogue {
-    /* 1.0" indent, 3.5" wide. */
-    margin-left: 10ch;
-    margin-right: 0;
-    max-width: 35ch;
-    text-align: left;
-    margin-bottom: 0.75em;
+    margin-left: 1in;
+    margin-right: 1.5in;
     margin-top: 0;
+    margin-bottom: 0.75em;
 }
 
 .character + .dialogue,
@@ -291,19 +209,11 @@ body.screenplay h1 {
     margin-bottom: 0;
 }
 
-/* Continuation: a dialogue paragraph that follows another dialogue
- * paragraph (cross-blank-line continuation under the same cue) gets a
- * small visual gap so it reads as a new paragraph within the same
- * speech block. */
 .dialogue + .dialogue {
     margin-top: 0.5em;
 }
 
 .action {
-    margin-left: 0;
-    margin-right: 0;
-    max-width: 60ch;
-    text-align: left;
     margin-top: 0;
     margin-bottom: 0.75em;
 }
@@ -312,9 +222,6 @@ body.screenplay h1 {
     text-align: right;
     text-transform: uppercase;
     font-weight: bold;
-    margin-left: 0;
-    margin-right: 0;
-    max-width: 60ch;
     margin-top: 1em;
     margin-bottom: 1em;
 }
@@ -322,29 +229,55 @@ body.screenplay h1 {
 .centered {
     text-align: center;
     margin: 1em auto;
-    max-width: 60ch;
 }
 
 .section-label {
     text-align: center;
     font-weight: bold;
-    font-size: 1.15rem;
-    letter-spacing: 0.05em;
-    margin-top: 1.25em;
-    margin-bottom: 1.25em;
-    color: rgb(51, 51, 51);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    color: rgb(120, 120, 120);
 }
 
 body.screenplay hr.section-break {
-    margin: 2em 0 1em 0;
+    margin: 2.5em 0 0.5em 0;
 }
 
-/* ── screenplay responsive ─────────────────────────────────────────────
- *
- * Indents stay in `ch` units down to ~375px. The clamp() on body.screenplay
- * font-size scales the whole column when the viewport is too narrow for a
- * full 60ch column at 1rem; proportional left-offsets are preserved.
- */
+/* ── screenplay responsive: tablet ─────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .dialogue {
+        margin-left: 0.75in;
+        margin-right: 1in;
+    }
+    .parenthetical {
+        margin-left: 1.15in;
+        margin-right: 1.25in;
+    }
+}
+
+/* ── screenplay responsive: mobile ─────────────────────────────────── */
+
+@media (max-width: 600px) {
+    body.screenplay {
+        max-width: 100%;
+    }
+    .character {
+        margin-left: 0;
+        text-align: center;
+    }
+    .dialogue {
+        margin-left: 1em;
+        margin-right: 0;
+    }
+    .parenthetical {
+        margin-left: 0.5em;
+        margin-right: 0;
+    }
+}
 
 @media (prefers-color-scheme: dark) {
     body { color: rgb(204, 204, 204); background: rgb(26, 26, 26); }
