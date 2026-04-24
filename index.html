@@ -209,10 +209,6 @@ body.screenplay h1 {
     margin-bottom: 0;
 }
 
-.dialogue + .dialogue {
-    margin-top: 0.5em;
-}
-
 .action {
     margin-top: 0;
     margin-bottom: 0.75em;
@@ -248,27 +244,10 @@ body.screenplay hr.section-break {
 
 /* ── screenplay responsive: tablet ─────────────────────────────────── */
 
-@media (orientation: portrait) and (min-width: 768px) and (max-width: 1024px) {
-    /* iPad portrait only. orientation:portrait excludes iPhone landscape and
-     * desktop browser windows (which are landscape). min-width:768 excludes
-     * all iPhone widths. */
-    body.screenplay {
-        font-size: 1.4rem;
-        /* Reduce left/right outer margin by 25%.
-         * Derived from: new_margin = 0.75 × (viewport − 6in) / 2, so
-         * max_width = viewport − 2 × new_margin = 25vw + 4.5in. */
-        max-width: calc(25vw + 4.5in);
-    }
-}
-
 @media (max-width: 768px) {
     .dialogue {
         margin-left: 0.75in;
         margin-right: 1in;
-    }
-    .parenthetical {
-        margin-left: 1.15in;
-        margin-right: 1.25in;
     }
 }
 
@@ -310,7 +289,7 @@ body.screenplay hr.section-break {
     #toc a { color: rgb(204, 204, 204); }
     .chapter { border-bottom-color: rgb(51, 51, 51); }
     .back-to-top { color: rgb(102, 102, 102); }
-    .section-label { color: rgb(224, 224, 224); }
+    .section-label { color: rgb(153, 153, 153); }
 }
     </style>
 </head>
