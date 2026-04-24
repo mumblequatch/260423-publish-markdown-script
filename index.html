@@ -192,6 +192,22 @@ body.screenplay {
     line-height: 1.5;
 }
 
+/* Tablet (601–1024px, iPad portrait & landscape): use the full viewport
+ * with comfortable padding and a larger font than desktop's 60ch column
+ * would allow. Indents stay proportional but tighter than desktop. */
+@media (min-width: 601px) and (max-width: 1024px) {
+    body.screenplay {
+        max-width: 100%;
+        padding: 2rem 2rem;
+        font-size: 1.4rem;
+    }
+    body.screenplay .character     { margin-left: 14ch; }
+    body.screenplay .parenthetical { margin-left: 9ch; max-width: 100%; }
+    body.screenplay .dialogue      { margin-left: 4ch; max-width: 100%; }
+    body.screenplay .action        { max-width: 100%; }
+    body.screenplay .transition    { max-width: 100%; }
+}
+
 @media (max-width: 600px) {
     /* Mobile: prioritize text legibility over print-exact indents.
      * Indents stay proportional (cue > parenthetical > dialogue > action)
