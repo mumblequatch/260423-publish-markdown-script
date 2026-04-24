@@ -184,12 +184,20 @@ body.screenplay {
     width: 100%;
     max-width: 60ch;
     box-sizing: border-box;
-    /* Floor 1.2rem so tablet/desktop text reads at a comfortable size
-     * (iPad portrait ≈ 21.6px). vw term scales up on wider viewports;
-     * max keeps it sane on very wide monitors. Mobile (≤600px) is
-     * overridden in the media query below. */
-    font-size: clamp(1.2rem, 2.5vw, 1.4rem);
+    /* Desktop: body-prose-sized text (~18px at html=18). Tablet and phone
+     * are overridden in media queries below. */
+    font-size: 1rem;
     line-height: 1.5;
+    /* Prevent long unbreakable strings (URLs, underscored slugs in the title)
+     * from forcing horizontal overflow on narrow viewports. */
+    overflow-wrap: anywhere;
+    word-wrap: break-word;
+}
+
+body.screenplay h1 {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 /* Tablet (601–1024px, iPad portrait & landscape): cap the body at the
@@ -215,9 +223,10 @@ body.screenplay {
      * but tighten so a comfortably-sized font column fits the viewport. */
     body.screenplay {
         max-width: 100%;
-        padding: 0.75rem 0.5rem;
-        font-size: 1rem;
+        padding: 1rem 1.25rem;
+        font-size: 1.35rem;
     }
+    body.screenplay h1 { font-size: 1.3rem; }
     body.screenplay .character     { margin-left: 8ch; }
     body.screenplay .parenthetical { margin-left: 5ch; max-width: 100%; }
     body.screenplay .dialogue      { margin-left: 3ch; max-width: 100%; }
