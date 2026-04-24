@@ -184,9 +184,11 @@ body.screenplay {
     width: 100%;
     max-width: 60ch;
     box-sizing: border-box;
-    /* Scale the column down on narrow viewports so a full 60ch column always
-     * fits — proportional indents (10ch / 15ch / 22ch) ride along. */
-    font-size: clamp(0.6rem, 2.6vw, 1rem);
+    /* Floor 1.2rem so tablet/desktop text reads at a comfortable size
+     * (iPad portrait ≈ 21.6px). vw term scales up on wider viewports;
+     * max keeps it sane on very wide monitors. Mobile (≤600px) is
+     * overridden in the media query below. */
+    font-size: clamp(1.2rem, 2.5vw, 1.4rem);
     line-height: 1.5;
 }
 
