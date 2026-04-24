@@ -192,13 +192,14 @@ body.screenplay {
     line-height: 1.5;
 }
 
-/* Tablet (601–1024px, iPad portrait & landscape): use the full viewport
- * with comfortable padding and a larger font than desktop's 60ch column
- * would allow. Indents stay proportional but tighter than desktop. */
+/* Tablet (601–1024px, iPad portrait & landscape): cap the body at the
+ * narrower of 60ch or (viewport − 4rem) so it always has visible margin
+ * on both sides AND stays centered. Bigger font than desktop's clamp
+ * provides at this width. Inherits body padding (1.5rem) and `margin: 0 auto`
+ * for centering. */
 @media (min-width: 601px) and (max-width: 1024px) {
     body.screenplay {
-        max-width: 100%;
-        padding: 2rem 2rem;
+        max-width: min(60ch, calc(100vw - 4rem));
         font-size: 1.4rem;
     }
     body.screenplay .character     { margin-left: 14ch; }
