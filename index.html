@@ -191,11 +191,19 @@ body.screenplay {
 }
 
 @media (max-width: 600px) {
+    /* Mobile: prioritize text legibility over print-exact indents.
+     * Indents stay proportional (cue > parenthetical > dialogue > action)
+     * but tighten so a comfortably-sized font column fits the viewport. */
     body.screenplay {
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-        font-size: clamp(0.5rem, 2.5vw, 0.95rem);
+        max-width: 100%;
+        padding: 0.75rem 0.5rem;
+        font-size: 1rem;
     }
+    body.screenplay .character     { margin-left: 8ch; }
+    body.screenplay .parenthetical { margin-left: 5ch; max-width: 100%; }
+    body.screenplay .dialogue      { margin-left: 3ch; max-width: 100%; }
+    body.screenplay .action        { max-width: 100%; }
+    body.screenplay .transition    { max-width: 100%; }
 }
 
 body.screenplay h1 {
@@ -335,8 +343,6 @@ body.screenplay hr.section-break {
 <body class="screenplay">
 <h1>260420_1244_Pirates</h1>
 <p class="action">Source: https://mumblequatch.github.io/260420-1244-pirates/</p>
-<hr class="section-break">
-<p class="section-label">COLD OPEN</p>
 <p class="scene-heading">EXT. CITY OF DIS, STREET — NIGHT</p>
 <p class="action">Rain.</p>
 <p class="action">Running FOOTSTEPS, splashing through puddles.</p>
@@ -348,8 +354,6 @@ body.screenplay hr.section-break {
 <p class="character">SOLDIER #2</p>
 <p class="dialogue"><em>They don't pay me enough for this!</em></p>
 <p class="action">Intense music.</p>
-<hr class="section-break">
-<p class="section-label">BETRAYAL</p>
 <p class="scene-heading">EXT. CITY OF DIS, ALLEY — NIGHT</p>
 <p class="action">Then a change in atmosphere — less open. An alley.</p>
 <p class="action">The footsteps skid to a stop.</p>
@@ -429,15 +433,11 @@ body.screenplay hr.section-break {
 <p class="character">VOICES</p>
 <p class="parenthetical">(calling)</p>
 <p class="dialogue">Alarm! Alarm!</p>
-<hr class="section-break">
-<p class="section-label">FLIGHT THROUGH THE CITY / INTRO MUSIC</p>
 <p class="action">Running footsteps, jostling pack, splashing.</p>
 <p class="action">Now the bells seem to come from EVERYWHERE. It's dizzying. Nightmarish.</p>
 <p class="action">RUNNING, RUNNING, RUNNING.</p>
 <p class="action">BLOOD POUNDING, POUNDING, POUNDING.</p>
 <p class="action">MUSIC. INTRO.</p>
-<hr class="section-break">
-<p class="section-label">THE PORT</p>
 <p class="scene-heading">EXT. CITY OF DIS, PORT — NIGHT</p>
 <p class="action">Finally, the bells are quiet.</p>
 <p class="action">A different sound has replaced them: the OCEAN. The CLINK of rigging, the CREAK of wooden boats.</p>
