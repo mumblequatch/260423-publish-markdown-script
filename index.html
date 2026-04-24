@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>260420_1244_Pirates</title>
+    <style>
+@import url('https://cdn.jsdelivr.net/gh/fonts-archive/Charter/Charter.css');
+
+@font-face {
+    font-family: 'Atkinson Hyperlegible Next';
+    src: url(fonts/AtkinsonHyperlegibleNext-Regular.woff2) format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Atkinson Hyperlegible Next';
+    src: url(fonts/AtkinsonHyperlegibleNext-Bold.woff2) format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Atkinson Hyperlegible Next';
+    src: url(fonts/AtkinsonHyperlegibleNext-Italic.woff2) format('woff2');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+* { box-sizing: border-box; }
+html { font-size: 18px; }
+
+@media (max-width: 600px) {
+    html { font-size: 22px; }
+}
+
+body {
+    font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 1rem;
+    line-height: 1.4;
+    color: rgb(25, 25, 25);
+    background: rgb(247, 247, 247);
+    max-width: 38em;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Charter, Georgia, 'Times New Roman', serif;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-top: 1.5em;
+    margin-bottom: 0.625em;
+}
+
+h1 { font-size: 1.6rem; color: rgb(51, 51, 51); }
+h2 { font-size: 1.35rem; color: rgb(51, 51, 51); }
+h3 { font-size: 1.15rem; font-weight: bold; color: rgb(51, 51, 51); }
+
+p { margin: 0 0 1em 0; }
+
+blockquote {
+    margin: 1em 0;
+    padding-left: 1.5em;
+    border-left: 3px solid rgb(200, 200, 200);
+    color: rgb(85, 85, 85);
+}
+
+ul, ol { margin: 1em 0; padding-left: 1.5em; }
+li { margin-bottom: 0.3em; }
+
+a { color: rgb(25, 25, 25); text-decoration: underline; }
+a:hover { color: rgb(26, 195, 255); }
+
+code {
+    font-family: 'SF Mono', Consolas, monospace;
+    font-size: 0.85em;
+    background: rgb(235, 235, 235);
+    padding: 0.1em 0.3em;
+    border-radius: 3px;
+}
+
+pre {
+    background: rgb(235, 235, 235);
+    padding: 1em;
+    overflow-x: auto;
+    border-radius: 3px;
+}
+
+pre code { background: none; padding: 0; }
+
+hr { border: none; border-top: 1px solid rgb(200, 200, 200); margin: 2em 0; }
+
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid rgb(200, 200, 200); padding: 0.5em; text-align: left; }
+th { background: rgb(235, 235, 235); }
+
+img { max-width: 100%; height: auto; }
+
+.title-block {
+    text-align: center;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0;
+    border-bottom: 1px solid rgb(200, 200, 200);
+}
+
+.title-block h1 { margin: 0 0 1.5em 0; font-size: 1.8rem; }
+.title-block .byline { font-size: 0.9rem; color: rgb(85, 85, 85); margin-bottom: 0.3em; }
+.title-block .author { font-size: 1.15rem; }
+
+#toc {
+    margin-top: 2em;
+    margin-bottom: 0;
+    padding-bottom: 2em;
+    border-bottom: 1px solid rgb(200, 200, 200);
+}
+
+#toc-heading { margin-top: 0; font-size: 1.2rem; color: rgb(51, 51, 51); }
+#toc ol, #toc ul { padding-left: 1.5em; margin: 0; font-family: Charter, Georgia, 'Times New Roman', serif; list-style: none; }
+#toc li { margin-bottom: 0.5em; }
+#toc a { font-family: Charter, Georgia, 'Times New Roman', serif; color: rgb(25, 25, 25); text-decoration: none; }
+#toc a:hover { color: rgb(26, 195, 255); text-decoration: underline; }
+#toc ul ul { margin-top: 0.3em; font-size: 0.9em; }
+#toc ul ul li { margin-bottom: 0.3em; }
+#toc ul ul ul { font-size: 1em; }
+
+.chapter {
+    padding-top: 2em;
+    padding-bottom: 2em;
+    border-bottom: 1px solid rgb(220, 220, 220);
+}
+
+.chapter:last-of-type { border-bottom: none; }
+.chapter h2:first-child { margin-top: 0; }
+
+.back-to-top {
+    display: block;
+    margin-top: 2em;
+    font-size: 0.75rem;
+    color: rgb(153, 153, 153);
+    text-decoration: none;
+}
+
+.back-to-top:hover { color: rgb(26, 195, 255); }
+
+/* ── screenplay layout ───────────────────────────────────────────────
+ *
+ * Industry-standard US screenplay typesetting. Measurements are inches from
+ * the page's left text-area edge, converted to `ch` units. Font is inherited
+ * from the page body (no Courier override).
+ *
+ *   Element          Left offset   Right edge / max width
+ *   ACTION           0ch           60ch (full text width, 6.0")
+ *   DIALOGUE         10ch (1.0")   max-width 35ch (right at 4.5")
+ *   PARENTHETICAL    15ch (1.5")   max-width 20ch (right at 3.5")
+ *   CHARACTER        22ch (2.2")   single line, ALL CAPS
+ *   TRANSITION       right-flushed at 60ch
+ *
+ * The article column itself is constrained to a 60ch text-area and centered
+ * on wide pages so the whole script sits in a comfortable column. Elements
+ * within it are LEFT-OFFSET, never centered. Cues only LOOK near-centered
+ * because of the proportions — they're pinned at 22ch from the left text
+ * edge.
+ *
+ * Responsive: instead of collapsing indents on small screens (which would
+ * destroy the screenplay look), we scale the entire column down via
+ * `font-size: clamp()`. The proportional indents ride along automatically
+ * because they're in `ch` units.
+ */
+
+body.screenplay {
+    /* 60ch text area for the script column. */
+    width: 100%;
+    max-width: 60ch;
+    box-sizing: border-box;
+    /* Scale the column down on narrow viewports so a full 60ch column always
+     * fits — proportional indents (10ch / 15ch / 22ch) ride along. */
+    font-size: clamp(0.6rem, 2.6vw, 1rem);
+    line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+    body.screenplay {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        font-size: clamp(0.5rem, 2.5vw, 0.95rem);
+    }
+}
+
+body.screenplay h1 {
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 1.5em;
+}
+
+.scene-heading {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-left: 0;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+.character {
+    /* 2.2" indent from left text edge — pinned, NOT centered. */
+    margin-left: 22ch;
+    margin-right: 0;
+    margin-bottom: 0;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.parenthetical {
+    /* 1.5" indent, 2.0" wide. */
+    margin-left: 15ch;
+    margin-right: 0;
+    max-width: 20ch;
+    text-align: left;
+    font-style: normal;
+    margin-bottom: 0;
+}
+
+.dialogue {
+    /* 1.0" indent, 3.5" wide. */
+    margin-left: 10ch;
+    margin-right: 0;
+    max-width: 35ch;
+    text-align: left;
+    margin-bottom: 0.75em;
+    margin-top: 0;
+}
+
+.character + .dialogue,
+.parenthetical + .dialogue {
+    margin-top: 0;
+}
+
+.character + .parenthetical,
+.dialogue + .parenthetical {
+    margin-top: 0;
+}
+
+.dialogue:has(+ .parenthetical) {
+    margin-bottom: 0;
+}
+
+/* Continuation: a dialogue paragraph that follows another dialogue
+ * paragraph (cross-blank-line continuation under the same cue) gets a
+ * small visual gap so it reads as a new paragraph within the same
+ * speech block. */
+.dialogue + .dialogue {
+    margin-top: 0.5em;
+}
+
+.action {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 60ch;
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 0.75em;
+}
+
+.transition {
+    text-align: right;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 60ch;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.centered {
+    text-align: center;
+    margin: 1em auto;
+    max-width: 60ch;
+}
+
+.section-label {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.15rem;
+    letter-spacing: 0.05em;
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+    color: rgb(51, 51, 51);
+}
+
+body.screenplay hr.section-break {
+    margin: 2em 0 1em 0;
+}
+
+/* ── screenplay responsive ─────────────────────────────────────────────
+ *
+ * Indents stay in `ch` units down to ~375px. The clamp() on body.screenplay
+ * font-size scales the whole column when the viewport is too narrow for a
+ * full 60ch column at 1rem; proportional left-offsets are preserved.
+ */
+
+@media (prefers-color-scheme: dark) {
+    body { color: rgb(204, 204, 204); background: rgb(26, 26, 26); }
+    h1 { color: rgb(224, 224, 224); }
+    h2 { color: rgb(224, 224, 224); }
+    h3 { color: rgb(224, 224, 224); }
+    blockquote { border-left-color: rgb(102, 102, 102); color: rgb(170, 170, 170); }
+    a { color: rgb(204, 204, 204); }
+    code, pre { background: rgb(40, 40, 40); }
+    hr { border-top-color: rgb(102, 102, 102); }
+    th, td { border-color: rgb(102, 102, 102); }
+    th { background: rgb(40, 40, 40); }
+    .title-block { border-bottom-color: rgb(102, 102, 102); }
+    .title-block .byline { color: rgb(170, 170, 170); }
+    #toc { border-bottom-color: rgb(102, 102, 102); }
+    #toc-heading { color: rgb(224, 224, 224); }
+    #toc a { color: rgb(204, 204, 204); }
+    .chapter { border-bottom-color: rgb(51, 51, 51); }
+    .back-to-top { color: rgb(102, 102, 102); }
+    .section-label { color: rgb(224, 224, 224); }
+}
+    </style>
+</head>
+<body class="screenplay">
+<h1>260420_1244_Pirates</h1>
+<p class="action">Source: https://mumblequatch.github.io/260420-1244-pirates/</p>
+<hr class="section-break">
+<p class="section-label">COLD OPEN</p>
+<p class="scene-heading">EXT. CITY OF DIS, STREET — NIGHT</p>
+<p class="action">Rain.</p>
+<p class="action">Running FOOTSTEPS, splashing through puddles.</p>
+<p class="action">Heavy breathing — a child.</p>
+<p class="action">BOOTSTEPS running, splashing.</p>
+<p class="character">SOLDIER #1</p>
+<p class="parenthetical">(Castilian Spanish)</p>
+<p class="dialogue"><em>Come on, he's getting away!</em></p>
+<p class="character">SOLDIER #2</p>
+<p class="dialogue"><em>They don't pay me enough for this!</em></p>
+<p class="action">Intense music.</p>
+<hr class="section-break">
+<p class="section-label">BETRAYAL</p>
+<p class="scene-heading">EXT. CITY OF DIS, ALLEY — NIGHT</p>
+<p class="action">Then a change in atmosphere — less open. An alley.</p>
+<p class="action">The footsteps skid to a stop.</p>
+<p class="action">Child breathing heavily.</p>
+<p class="action">Blood pounding in our ears.</p>
+<p class="action">Nearby, a pair of boots splash to a stop.</p>
+<p class="character">SOLDIER #1</p>
+<p class="dialogue"><em>Wait, he went in that alley!</em></p>
+<p class="character">SOLDIER #2</p>
+<p class="parenthetical">(further away)</p>
+<p class="dialogue"><em>No, the street! The street!</em></p>
+<p class="character">SOLDIER #1</p>
+<p class="dialogue"><em>I swear I saw…</em></p>
+<p class="character">SOLDIER #2</p>
+<p class="dialogue"><em>Forget the alley! Let's go!</em></p>
+<p class="action">Both pairs of bootsteps recede.</p>
+<p class="action">Leaving just the breathing.</p>
+<p class="action">And the rain.</p>
+<p class="action">Then the CREAK of an old, wooden door.</p>
+<p class="action">A sharp intake of breath:</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">I'm sorry, I was just…</p>
+<p class="character">BERTHOLD</p>
+<p class="parenthetical">(tired, but warm, Cockney accent)</p>
+<p class="dialogue">Don't worry, I ain't gonna scold away a lonely child on a rainy night.</p>
+<p class="parenthetical">(beat)</p>
+<p class="dialogue">Whatcha doing out here, anyway?</p>
+<p class="parenthetical">(beat)</p>
+<p class="dialogue">Who's after you?</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">I don't know. Soldiers or something.</p>
+<p class="character">BERTHOLD</p>
+<p class="dialogue">Lord <em>Volando's</em> men? Didn't know they'd sunk to terrorizing children. Why're they after you?</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">I… I don't know.</p>
+<p class="character">BERTHOLD</p>
+<p class="dialogue">Well… hell, whyncha come inside for a bit. Can't have you out here soaked and drippin' and all by your lonesome, can we?</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">Are you… with them?</p>
+<p class="character">BERTHOLD</p>
+<p class="dialogue">With <em>them!</em></p>
+<p class="parenthetical">(chuckles)</p>
+<p class="dialogue">Good god, no. Nobody's with them but <em>them.</em> Rest of us are just trying to get along.</p>
+<p class="parenthetical">(beat)</p>
+<p class="dialogue">Come on in, hey? We'll just get you dried off and comfortable while they chase their tails a bit. Then we'll send you on your way.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">Ok… okay.</p>
+<p class="action">Footsteps in a puddle.</p>
+<p class="character">BERTHOLD</p>
+<p class="dialogue">That's right. Just a few ticks indoors, bum in a seat, will do wonders. Might even be able to…</p>
+<p class="parenthetical">(beat)</p>
+<p class="dialogue">Hang on, stop. Don't turn away, now. Come on, face toward the light.</p>
+<p class="action">Rain.</p>
+<p class="action">Berthold — a sharp intake of breath.</p>
+<p class="action">Silence.</p>
+<p class="character">BERTHOLD</p>
+<p class="parenthetical">(flat, empty)</p>
+<p class="dialogue">I'm sorry, son. I can't help you.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">What's wrong?</p>
+<p class="character">BERTHOLD</p>
+<p class="dialogue">Go on, get out of here.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">But I don't…</p>
+<p class="character">BERTHOLD</p>
+<p class="dialogue">I'm sorry, boy…</p>
+<p class="action">A HAND BELL starts ringing hard. LOUD.</p>
+<p class="character">BERTHOLD</p>
+<p class="parenthetical">(calling)</p>
+<p class="dialogue">Alarm! Alarm!</p>
+<p class="action">The creak of windows opening from above. Voices.</p>
+<p class="character">VOICE #1</p>
+<p class="dialogue">What happened?</p>
+<p class="character">VOICE #2</p>
+<p class="dialogue">You know, the <em>boy</em>!</p>
+<p class="action">Then more HAND BELLS.</p>
+<p class="character">VOICES</p>
+<p class="parenthetical">(calling)</p>
+<p class="dialogue">Alarm! Alarm!</p>
+<hr class="section-break">
+<p class="section-label">FLIGHT THROUGH THE CITY / INTRO MUSIC</p>
+<p class="action">Running footsteps, jostling pack, splashing.</p>
+<p class="action">Now the bells seem to come from EVERYWHERE. It's dizzying. Nightmarish.</p>
+<p class="action">RUNNING, RUNNING, RUNNING.</p>
+<p class="action">BLOOD POUNDING, POUNDING, POUNDING.</p>
+<p class="action">MUSIC. INTRO.</p>
+<hr class="section-break">
+<p class="section-label">THE PORT</p>
+<p class="scene-heading">EXT. CITY OF DIS, PORT — NIGHT</p>
+<p class="action">Finally, the bells are quiet.</p>
+<p class="action">A different sound has replaced them: the OCEAN. The CLINK of rigging, the CREAK of wooden boats.</p>
+<p class="action">Footsteps slowing, breathing. Footsteps stop.</p>
+<p class="action">Blood pounding in ears.</p>
+<p class="action">Breathing slows.</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">Breathless and exhausted beyond fear, Benjamin finally emerged from the labyrinthine streets of the city to find himself in a port.</p>
+<p class="dialogue">He knew he wasn't safe, but he was finally free of the prying eyes of the drooping, close-packed tenements.</p>
+<p class="dialogue">Here were only the blind walls of crumbling warehouses. And a glowing, grey-green sea that filled a bay and then stretched like a luminous bubble to the horizon. Pale shapes moved beneath its surface, slow and distant, like ghosts of submarines.</p>
+<p class="dialogue">The giant, black forms looming along the wharf reached their skeletal masts and spars into the starless sky, the rigging like threadbare shawls about their bony arms. Lights twinkled here and there from belowdecks, but otherwise the port was dead. Benjamin chuckled at the thought: it sure was.</p>
+<p class="dialogue">That was when he heard the music. A guitar, plucked slowly. And a deep voice singing. Benjamin's heart sank — he wasn't alone after all.</p>
+<p class="dialogue">But the melody was simple, and sad and his tired mind empty of other, immediate purpose, Benjamin followed it to the end of the wharf, and ducked behind a pyramid of moldering barrels to observe.</p>
+<p class="dialogue">The music came from a shadowy figure sitting on a great coil of rope. From where he stood, Benjamin could see only that the figure wore a deep, black cloak that revealed a large, faintly-green nose and two pale, oversized hands that moved like graceful, white spiders over the strings.</p>
+<p class="dialogue">A raven sat hunched nearby on a wooden post, its head cocked in Benjamin's direction, one glittering eye seeming to clock him where he hid.</p>
+<p class="action">The music stopped.</p>
+<p class="character">HOODED FIGURE</p>
+<p class="dialogue">Don't be afraid. Come out. I shall not raise an alarm.</p>
+<p class="parenthetical">(beat)</p>
+<p class="dialogue">I am not a coward, like my countrymen. Or at least not the same kind. Come here, boy. Come.</p>
+<p class="action">Footsteps.</p>
+<p class="character">HOODED FIGURE</p>
+<p class="dialogue">So the rumors are true.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">How do people even know I'm here?</p>
+<p class="character">HOODED FIGURE</p>
+<p class="dialogue">The news of a living boy in the land of the dead travels fast.</p>
+<p class="parenthetical">(beat)</p>
+<p class="dialogue">I never thought I should see a living soul again. It is almost too much for these old eyes to bear.</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">The figure set the guitar aside.</p>
+<p class="character">HOODED FIGURE</p>
+<p class="dialogue">It is a wonder you have evaded capture for so long. A wonder you are here at all.</p>
+<p class="parenthetical">(beat)</p>
+<p class="dialogue">You must have a very important reason.</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">He paused, as though listening to something Benjamin could not hear.</p>
+<p class="character">HOODED FIGURE</p>
+<p class="dialogue">Now I understand. Your parents. You are looking for your parents.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">You know where they are?</p>
+<p class="character">HOODED FIGURE</p>
+<p class="dialogue">I know how to find out.</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">One pale hand gestured toward the sea. Out in the gloom, a ship lay at anchor — black hull, black sails, lanterns burning with a sickly green fire.</p>
+<p class="dialogue">We hear distant, drunken singing wafting across the water from the boat. Pirates.</p>
+<p class="character">HOODED FIGURE</p>
+<p class="dialogue">That is the Naglfar. Her captain is Bartholomew Roberts. He and his crew possess something that does not belong to them.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">What is it?</p>
+<p class="character">HOODED FIGURE</p>
+<p class="dialogue">A very particular stone. It allows a skilled practitioner to see almost anywhere in the gray country — no matter how near or how far. It belongs to a creature of the deep, a demon old as the world. As long as it had this stone, it slept. It remained at peace. The pirates know this, but they took it anyway. They don't believe.</p>
+<p class="parenthetical">(beat)</p>
+<p class="dialogue">But disbelief doesn't make a thing untrue.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">Who are you, anyway?</p>
+<p class="character">HOODED FIGURE</p>
+<p class="dialogue">I would tell you, but you would not live long enough to hear the answer.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">So if you had the stone you could tell me where my parents are?</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">The figure inclined his head.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">Why haven't you taken it back yourself?</p>
+<p class="action">The raven laughs.</p>
+<p class="character">HOODED FIGURE</p>
+<p class="parenthetical">(somehow acknowledging the insult)</p>
+<p class="dialogue">I was like you, long ago. Fearless and strong. I am no longer the author of history, merely its subject. But your story has only just begun, young one. Living one.</p>
+<p class="dialogue">Bring me the stone.</p>
+<p class="scene-heading">EXT. UNDERWORLD, SPECTRAL OCEAN — NIGHT</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">Benjamin found a boat — little more than a raft fitted with oars — and pushed out across the spectral water. It was warm and thick, more like oil than sea, glowing faintly beneath the surface. He did his best not to imagine what might be moving below.</p>
+<p class="action">The Naglfar loomed larger as he drew near.</p>
+<p class="action">Pirates singing.</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">A great galleon, ancient and barnacled, its sails hanging limp in the windless air. And then he saw the hull.</p>
+<p class="dialogue">It was studded with fingernails — thousands of them, yellowed and curling, pressed into the wood like scales.</p>
+<p class="action">SFX: pirates stop singing.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">Benjamin grabbed the anchor chain and began to climb.</p>
+<p class="scene-heading">EXT. UNDERWORLD, PIRATE SHIP — CONTINUOUS</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">It was not until he was actually pulling himself over the railing that he noticed the singing had stopped. What he saw then startled him so badly that he almost fell backward off the boat. He pinwheeled his arms to regain his balance and finally, barely, tucked a finger around the rail and pulled himself back aboard.</p>
+<p class="dialogue">And then confronted again the bizarre tableau before him.</p>
+<p class="dialogue">Skeletons dressed as pirates. Or, half-skeletons. Most had some amount of flesh still clinging to the bones. Half-faces. Grey men standing on legs of bones. And everything in between.</p>
+<p class="dialogue">Standing, sitting, mugs of all description — some not even mugs — in their moldering fists. For some reason it jumped out at him: the source of the music. One skeleton with shiny, bright eyes situated in an otherwise bleached-white skull held an accordion. Next to him, a wooden mannequin's head sat atop an other wise complete, if deathly grey, body, stripped to the waist, which held a fiddle.</p>
+<p class="dialogue">Every eye or pair of eyes or empty sockets stared at Benjamin.</p>
+<p class="character">CAPTAIN ROBERTS</p>
+<p class="dialogue">A round of applause, gentlemen, for our agile young alpinist — the rope-running rapscallion — the peerless, pocket-sized paladin — the plucky, palpitating, prodigiously…</p>
+<p class="parenthetical">(a beat as he flails, then with a flourish)</p>
+<p class="dialogue">…<em>preposterously</em> pertinacious <em>pilgrim</em> of the pellucid provinces!</p>
+<p class="action">Silence on deck. Then, from near the mainmast: the rustle of old pages turning. A bony finger dragging down a column. A skeletal jaw clicking softly as it tests the words. A long pause.</p>
+<p class="character">SKELETON LIBRARIAN</p>
+<p class="parenthetical">(flat, bookish, unhurried)</p>
+<p class="dialogue">Yep. Checks out.</p>
+<p class="action">The deck erupts. Bone mugs slam the rails. The accordion staggers back to life. The fiddle saws into a jig. The dead cheer — a dry, rattling sound, like wind through a boneyard.</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">The Captain, for that's who he was, swept off his hat and bowed low — once to port, once to starboard.</p>
+<p class="dialogue">Bartholomew Roberts was a big man — or had been, when he was alive. He wore a long coat of faded red velvet and a hat with a bedraggled feather. His beard was thick and black and tangled with what might have been seaweed or something worse. But the thing Benjamin noticed was his legs: two peg legs, both of them, carved from dark wood and clomping heavily on the deck as he walked. He turned to Benjamin and bowed again.</p>
+<p class="character">CAPTAIN ROBERTS</p>
+<p class="dialogue">My name is Captain Bartholomew Roberts and this is my ship, the Naglfar. And this assemblage of scurrilous scalawags is unfortunately my crew. So who, now, would you be?</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">Benjamin.</p>
+<p class="character">CAPTAIN ROBERTS</p>
+<p class="dialogue">Benjamin? There must be something more to it. Benjamin Johnson? Benjamin Franklin. Benjamin Netanyahu — a personal favorite. What is it, boy? It can't be just "Benjamin."</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">Benjamin the Sorcerer. And I am alive.</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">For a split second, Roberts froze in genuine surprise. Perhaps those rheumy eyes could not see well enough to detect the color of Benjamin's skin? But then the moment was over and Roberts resumed his performance, his eyes flashing wide with mock-terror as he clutched at his beard.</p>
+<p class="character">CAPTAIN ROBERTS</p>
+<p class="dialogue">Did you hear that, boys? We got a wizard in our midst! A living boy. On my ship! Now that is something we don't see often.</p>
+<p class="action">General laughter.</p>
+<p class="character">CAPTAIN ROBERTS</p>
+<p class="dialogue">And why, o wimpy, whelpish wizard from the waking world, have you graced our dirt-drizzled decks this day? Are you lost? Looking for passage? Or are you just stupid?</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">I came for the seeing stone. The one you stole.</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">A murmur ran through the crew. Captain Roberts' smile didn't waver.</p>
+<p class="character">CAPTAIN ROBERTS</p>
+<p class="dialogue">Stole? That's an ugly word. I prefer claimed. I prefer took. The stone was sitting in a temple with no one watching it. Finders keepers, boy. That's the law of the sea — and the law beneath it.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">It doesn't belong to you.</p>
+<p class="character">CAPTAIN ROBERTS</p>
+<p class="dialogue">It does now. But I admire your courage. Or your stupidity. Hard to tell the difference at your age. So let me give you some advice, boy, for free.</p>
+<p class="dialogue">Go home. Find your little boat and row back to whatever shore you came from. The dead don't need rescuing. Your parents — oh yes, I can see it in your face, that's what this is about — your parents are dead. Do you understand what that means? It means they're done. Finished. They belong here now. What exactly do you think you're going to do, drag them back to the land of the living? Put them in their old beds and pretend nothing happened?</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">Benjamin's hands were shaking, but he made them stop.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">They don't belong here. Something took them before their time, and I'm going to find them and bring them back. I'm not leaving this ship until I get that stone.</p>
+<p class="character">CAPTAIN ROBERTS</p>
+<p class="dialogue">Ah.</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">The captain straightened up, and something flickered in those dead eyes — not quite respect, but something adjacent to it.</p>
+<p class="character">CAPTAIN ROBERTS</p>
+<p class="dialogue">A quest. How charming. How utterly pointless.</p>
+<p class="parenthetical">(calling)</p>
+<p class="dialogue">He's made his choice, boys. Prepare the Starfish!</p>
+<p class="action">A general cheer goes up.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">What's the Starfish?</p>
+<p class="character">CAPTAIN ROBERTS</p>
+<p class="dialogue">I call it the Great Unburdener.</p>
+<p class="parenthetical">(we hear the evil grin in his voice)</p>
+<p class="dialogue">Yes, the Starfish shall unburden you of liberty… limb…and <em>life</em>.</p>
+<p class="action">Roberts laughs cruelly.</p>
+<p class="action">The sounds of irons being clapped around Benjamin's arms and legs.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">Ow! Let me go!</p>
+<p class="parenthetical">(beat)</p>
+<p class="dialogue">I said, let me <em>go!</em></p>
+<p class="character">PIRATE #1</p>
+<p class="dialogue">Come on, now, it'll be easier for everyone if you just calmly die.</p>
+<p class="character">PIRATE #2</p>
+<p class="dialogue">You could, of course, use a little magic. You know, brighten things up.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">It doesn't work like that.</p>
+<p class="character">PIRATE #1</p>
+<p class="dialogue">How does it work?</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">You wouldn't understand. What is the Starfish, anyway?</p>
+<p class="character">PIRATE #2</p>
+<p class="dialogue">Oh, you'll see.</p>
+<p class="character">PIRATE #1</p>
+<p class="parenthetical">(helpfully, almost fondly)</p>
+<p class="dialogue">Basically, we lash your hands and feet to the four winches — one for each. And then we wind 'em up, you know. Wind and wind…</p>
+<p class="character">PIRATE #2</p>
+<p class="dialogue">Ooooh! And stretch.</p>
+<p class="character">PIRATE #1</p>
+<p class="dialogue">Of course stretch — that's implied, you dolt. Anyway, all that stuff until you sort of… come apart.</p>
+<p class="character">PIRATE #2</p>
+<p class="dialogue">Explode, like.</p>
+<p class="character">PIRATE #1</p>
+<p class="dialogue">Will you please — !</p>
+<p class="parenthetical">(a beat)</p>
+<p class="dialogue">Oh, all right. Explode. Anyway, I think you'll quite enjoy it.</p>
+<p class="dialogue">If you lose, you stay. You join my crew. Forever. A living boy among the dead, serving on my ship until the stars burn out. Do we have a deal?</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">Benjamin thought about his parents. He thought about the hooded figure on the wharf, and the seeing stone, and how far he had already come.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">Deal.</p>
+<p class="scene-heading">INT. UNDERWORLD, PIRATE SHIP, CAPTAIN'S QUARTERS — CONTINUOUS</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">They sat at a table in the captain's quarters, which smelled of brine and old things. The seeing stone sat on a shelf behind Roberts — a crystal orb in a knotted rope cradle, glowing faintly blue and green, like something alive.</p>
+<p class="dialogue">The cards were old and soft, their faces worn almost smooth. Benjamin didn't recognize the suits — they seemed to shift when he wasn't looking directly at them — but the game itself was simple enough. Highest hand wins.</p>
+<p class="dialogue">Captain Roberts dealt, his pale fingers moving with practiced ease.</p>
+<p class="character">CAPTAIN ROBERTS</p>
+<p class="dialogue">Let me tell you something, boy. I've been dead a long time. Longer than you can imagine. And in all that time, do you know what I've learned?</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">Benjamin studied his hand. Not bad. Not great.</p>
+<p class="character">CAPTAIN ROBERTS</p>
+<p class="dialogue">Nothing matters. Not in the end. The living think their little lives are so important — their loves, their losses, their desperate struggles. But it all comes to the same place eventually. Here. The gray country. The endless sea.</p>
+<p class="dialogue">Your parents learned that. And so will you.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">My parents aren't like you.</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">He discarded, drew again. Better.</p>
+<p class="character">CAPTAIN ROBERTS</p>
+<p class="dialogue">No? They're dead, aren't they? That makes them exactly like me.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">They didn't choose to be here. You did. You chose this — the ship, the crew, the stealing. You chose to be a pirate.</p>
+<p class="character">CAPTAIN ROBERTS</p>
+<p class="dialogue">I chose freedom.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">You chose to take things that don't belong to you and pretend that makes you strong. But it doesn't. It just makes you a thief.</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">The captain looked at Benjamin's hand. Then, slowly, he looked at his own.</p>
+<p class="action">The silence stretched.</p>
+<p class="character">CAPTAIN ROBERTS</p>
+<p class="parenthetical">(flat)</p>
+<p class="dialogue">Well. It seems you've won.</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">Benjamin reached for the stone.</p>
+<p class="dialogue">A hand caught his wrist — cold and strong as iron.</p>
+<p class="character">CAPTAIN ROBERTS</p>
+<p class="dialogue">I said you won. I didn't say I was giving it to you.</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">Benjamin tried to pull away, but the grip was unbreakable. Around him, he heard the crew moving closer, their empty eyes fixed on him.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">You made a deal.</p>
+<p class="character">CAPTAIN ROBERTS</p>
+<p class="dialogue">I'm a pirate, boy.</p>
+<p class="dialogue">Did you think I played fair? Did you think any of this was fair? There is no fair. There's only what you can take and what you can keep. And you — you can't keep anything.</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">He shoved Benjamin back toward his crew.</p>
+<p class="character">CAPTAIN ROBERTS</p>
+<p class="dialogue">Besides — do you even know what this is?</p>
+<p class="dialogue">They told us this little bauble was a seal. Keeping some terrible demon locked away in the deep. Some hungry old god from before the world had a name.</p>
+<p class="dialogue">Well, here it sits. Here we are. And I don't see any demons, do you?</p>
+<p class="dialogue">No monsters. No old gods. Just a pretty light in a rope cage. The priests and their stories — that's all it ever was. Stories to scare children.</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">The crew was still laughing when Benjamin closed his eyes.</p>
+<p class="dialogue">He reached — not for the raw force inside him, but for the stone itself. He could feel it on the shelf behind Roberts, that faint blue-green glow, and beneath the glow, something else. An impression. A memory. The shape of the thing it had been holding back.</p>
+<p class="dialogue">Show me, he thought. Show me what they don't believe in.</p>
+<p class="dialogue">The stone pulsed once, twice — and then the demon came.</p>
+<p class="dialogue">It rose through the floor of the cabin as though the wood were water — vast and dark, its body a mass of writhing shadows and pale, bioluminescent eyes. Tentacles uncoiled across the ceiling, each one thick as a mast, lined with suckers that pulsed with cold light. A mouth opened somewhere in the darkness — no, several mouths, ringed with teeth that went back and back forever. And from those mouths came a sound: not a roar, but a whisper, a thousand whispers layered on top of each other, hungry and old and patient.</p>
+<p class="action">The laughter stopped.</p>
+<p class="dialogue">Captain Roberts stumbled backward, his peg legs sliding on the deck. His face — his dead, gray, arrogant face — had gone pale as bone.</p>
+<p class="character">CAPTAIN ROBERTS</p>
+<p class="parenthetical">(breathing)</p>
+<p class="dialogue">No. No, that's not — it can't be —</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">The demon turned toward him. All those eyes, focusing. All those mouths, smiling.</p>
+<p class="character">DEMON</p>
+<p class="parenthetical">(whispers layered)</p>
+<p class="dialogue">You took what was mine. Did you think I would not come?</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">The crew broke. They ran — scrambling over each other, fighting to get through the door, screaming in voices that shouldn't have been able to scream. Even Roberts ran, his thunk-thunk-thunk lost in the chaos of pounding feet and howling terror.</p>
+<p class="dialogue">Benjamin opened his eyes. The illusion held — he could feel it drawing on his power, a steady drain like blood from a wound — but he didn't need it to hold for long.</p>
+<p class="dialogue">He grabbed the seeing stone from its shelf and ran.</p>
+<p class="scene-heading">EXT. UNDERWORLD, WHARF — LATER</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">The hooded figure was waiting on the wharf, exactly where Benjamin had left him. The raven cocked its head as Benjamin approached.</p>
+<p class="character">HOODED FIGURE</p>
+<p class="dialogue">You have it.</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">Benjamin held out the seeing stone. It was heavier than it looked, and warm against his palms, still glowing that faint blue-green.</p>
+<p class="dialogue">The figure took it with those pale, oversized hands. For a long moment, he simply held it, staring into its depths.</p>
+<p class="action">Then he went still.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">What is it? What do you see?</p>
+<p class="character">HOODED FIGURE</p>
+<p class="dialogue">I see… nothing.</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">Benjamin's stomach dropped.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">What do you mean, nothing?</p>
+<p class="character">HOODED FIGURE</p>
+<p class="dialogue">I mean I see nothing. Your parents are not… visible. To the stone.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">But you said —</p>
+<p class="character">HOODED FIGURE</p>
+<p class="dialogue">I said I would look. I said I would show you where they are. But the stone cannot find them.</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">The figure looked up, and though Benjamin still couldn't see his face, he had the sense of something shifting beneath that hood.</p>
+<p class="character">HOODED FIGURE</p>
+<p class="dialogue">This is… unexpected.</p>
+<p class="character">BENJAMIN</p>
+<p class="parenthetical">(bitter)</p>
+<p class="dialogue">Great. Thanks a lot. I risked my life for nothing.</p>
+<p class="character">HOODED FIGURE</p>
+<p class="dialogue">No: wait!</p>
+<p class="dialogue">If the stone cannot see them, that tells us something. The stone can see anywhere in the Underworld. Anywhere in the gray country, the spectral sea, the fields of the forgotten. If it cannot see your parents, then they are not in any of those places.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">Then where are they?</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">The hooded figure was silent for a long moment. The raven shifted on its post.</p>
+<p class="character">HOODED FIGURE</p>
+<p class="dialogue">There is only one place the stone cannot reach. A place beneath this place. Deeper than the Underworld. Older.</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">He gave the stone back to Benjamin.</p>
+<p class="character">HOODED FIGURE</p>
+<p class="dialogue">Keep this. You will need it.</p>
+<p class="character">BENJAMIN</p>
+<p class="dialogue">What place? Where do I have to go?</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">The figure turned away, reaching for his guitar.</p>
+<p class="character">HOODED FIGURE</p>
+<p class="dialogue">The Underneath. Your parents are in the Underneath.</p>
+<p class="character">NARRATOR</p>
+<p class="dialogue">Benjamin looked out at the spectral ocean, at the distant shape of the Naglfar still burning with those sickly green lights.</p>
+<p class="action">The Underneath. Deeper than the Underworld.</p>
+<p class="dialogue">He had a direction now. It was worse than he'd hoped.</p>
+<p class="action">But it was something.</p>
+<p class="dialogue">He tucked the seeing stone into his coat and started walking.</p>
+</body>
+</html>
