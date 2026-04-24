@@ -248,10 +248,13 @@ body.screenplay hr.section-break {
 
 /* ── screenplay responsive: tablet ─────────────────────────────────── */
 
-@media (pointer: coarse) and (min-width: 601px) and (max-width: 1024px) {
+@media (orientation: portrait) and (min-width: 768px) and (max-width: 1024px) {
+    /* iPad portrait only. orientation:portrait excludes iPhone landscape and
+     * desktop browser windows (which are landscape). min-width:768 excludes
+     * all iPhone widths. */
     body.screenplay {
         font-size: 1.4rem;
-        /* Reduce left/right outer margin by 25% on iPad only.
+        /* Reduce left/right outer margin by 25%.
          * Derived from: new_margin = 0.75 × (viewport − 6in) / 2, so
          * max_width = viewport − 2 × new_margin = 25vw + 4.5in. */
         max-width: calc(25vw + 4.5in);
