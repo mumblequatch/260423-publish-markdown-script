@@ -35,7 +35,7 @@
 html { font-size: 18px; }
 
 @media (max-width: 600px) {
-    html { font-size: 22px; }
+    html { font-size: 24px; }
 }
 
 body {
@@ -157,7 +157,7 @@ img { max-width: 100%; height: auto; }
 /* ── screenplay layout ──────────────────────────────────────────────── */
 
 body.screenplay {
-    max-width: 6in;
+    max-width: 7.5in;
     line-height: 1.5;
 }
 
@@ -249,6 +249,13 @@ body.screenplay hr.section-break {
         margin-left: 0.75in;
         margin-right: 1in;
     }
+}
+
+/* ── screenplay responsive: iPad portrait ──────────────────────────── */
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    html { font-size: 21px; }
+    body.screenplay { max-width: 100%; }
 }
 
 /* ── screenplay responsive: mobile ─────────────────────────────────── */
